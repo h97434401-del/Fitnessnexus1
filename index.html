@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FitnessNexus1</title>
+<link rel="icon" type="image/jpeg" href="https://i.ibb.co/gLHRFmxV/main-pintrest-photo.jpg">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #080b0f;
+    --dark: #0e1117;
+    --card: #141920;
+    --border: #1e2530;
+    --blue: #2563eb;
+    --blue2: #3b82f6;
+    --blue-glow: rgba(37,99,235,0.12);
+    --green: #10b981;
+    --white: #f0f4f8;
+    --muted: #7a8694;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--dark); color:var(--white); font-family:'Inter',sans-serif; line-height:1.6; }
+
+  /* NAV */
+  nav {
+    background:var(--black);
+    border-bottom:3px solid var(--blue);
+    position:sticky; top:0; z-index:100;
+    padding:0 32px;
+    display:flex; align-items:center; justify-content:space-between;
+    height:68px;
+  }
+  .logo { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:2rem; letter-spacing:2px; color:var(--blue2); text-decoration:none; }
+  .logo span { color:var(--white); }
+  nav ul { list-style:none; display:flex; gap:32px; }
+  nav ul a { color:var(--muted); text-decoration:none; font-size:0.85rem; font-weight:600; letter-spacing:1.5px; text-transform:uppercase; transition:color 0.2s; }
+  nav ul a:hover { color:var(--blue2); }
+
+  /* HERO */
+  .hero {
+    background:linear-gradient(135deg,#080b0f 0%,#0a1628 50%,#080b0f 100%);
+    min-height:560px; display:flex; align-items:center; justify-content:center;
+    text-align:center; padding:80px 24px; position:relative; overflow:hidden;
+  }
+  .hero::before {
+    content:''; position:absolute; top:-50%; left:-50%; width:200%; height:200%;
+    background:radial-gradient(ellipse at center,var(--blue-glow) 0%,transparent 60%);
+  }
+  .hero-content { position:relative; z-index:1; max-width:820px; }
+  .hero-eyebrow {
+    display:inline-block; background:var(--blue); color:#fff;
+    font-size:0.75rem; font-weight:700; letter-spacing:3px; text-transform:uppercase;
+    padding:7px 18px; border-radius:2px; margin-bottom:28px;
+  }
+  .hero h1 { font-family:'Barlow Condensed',sans-serif; font-size:clamp(3rem,8vw,5.5rem); font-weight:900; line-height:1.0; margin-bottom:22px; }
+  .hero h1 span { color:var(--blue2); }
+  .hero p { font-size:1.1rem; color:var(--muted); max-width:580px; margin:0 auto 40px; }
+  .hero-btns { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
+  .btn-primary { background:var(--blue); color:#fff; padding:15px 36px; font-weight:700; font-size:0.9rem; letter-spacing:1.5px; text-transform:uppercase; text-decoration:none; border-radius:4px; transition:background 0.2s; box-shadow:0 4px 20px rgba(37,99,235,0.3); }
+  .btn-primary:hover { background:var(--blue2); }
+  .btn-outline { border:2px solid var(--blue2); color:var(--blue2); padding:15px 36px; font-weight:700; font-size:0.9rem; letter-spacing:1.5px; text-transform:uppercase; text-decoration:none; border-radius:4px; transition:all 0.2s; }
+  .btn-outline:hover { background:var(--blue); color:#fff; border-color:var(--blue); }
+
+  /* STATS */
+  .stats-bar { background:var(--black); border-top:1px solid var(--border); border-bottom:1px solid var(--border); display:flex; justify-content:center; flex-wrap:wrap; }
+  .stat { padding:22px 44px; text-align:center; border-right:1px solid var(--border); }
+  .stat:last-child { border-right:none; }
+  .stat-num { font-family:'Barlow Condensed',sans-serif; font-size:2.2rem; font-weight:900; color:var(--blue2); display:block; }
+  .stat-label { font-size:0.72rem; color:var(--muted); text-transform:uppercase; letter-spacing:1px; }
+
+  /* SECTION */
+  .section { padding:80px 24px; max-width:1200px; margin:0 auto; }
+  .section-header { text-align:center; margin-bottom:56px; }
+  .section-tag { display:inline-block; border:1px solid var(--blue2); color:var(--blue2); font-size:0.7rem; letter-spacing:3px; text-transform:uppercase; padding:5px 14px; border-radius:2px; margin-bottom:16px; }
+  .section-header h2 { font-family:'Barlow Condensed',sans-serif; font-size:clamp(2.2rem,5vw,3.2rem); font-weight:900; }
+  .section-header h2 span { color:var(--blue2); }
+  .section-header p { color:var(--muted); margin-top:12px; }
+
+  /* PRODUCT GRID */
+  .product-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(350px,1fr)); gap:28px; }
+  .product-card { background:var(--card); border:1px solid var(--border); border-radius:12px; overflow:hidden; transition:transform 0.25s,border-color 0.25s,box-shadow 0.25s; display:flex; flex-direction:column; }
+  .product-card:hover { transform:translateY(-6px); border-color:var(--blue2); box-shadow:0 8px 32px rgba(37,99,235,0.15); }
+
+  .product-img-wrap { width:100%; height:280px; overflow:hidden; background:#1a1f2a; position:relative; }
+  .product-img-wrap img { width:100%; height:100%; object-fit:cover; transition:transform 0.3s; }
+  .product-card:hover .product-img-wrap img { transform:scale(1.04); }
+
+  .badge { position:absolute; top:12px; left:12px; background:var(--blue); color:#fff; font-size:0.65rem; font-weight:700; letter-spacing:1px; text-transform:uppercase; padding:5px 11px; border-radius:3px; }
+  .badge-top { position:absolute; top:12px; right:12px; background:var(--green); color:#000; font-size:0.65rem; font-weight:700; padding:5px 11px; border-radius:3px; }
+
+  .product-body { padding:24px; flex:1; display:flex; flex-direction:column; }
+  .product-brand { font-size:0.7rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--blue2); margin-bottom:8px; }
+  .product-title { font-family:'Barlow Condensed',sans-serif; font-size:1.35rem; font-weight:700; line-height:1.3; margin-bottom:12px; }
+  .stars { color:#f59e0b; font-size:1rem; margin-bottom:4px; }
+  .rating-text { font-size:0.78rem; color:var(--muted); margin-bottom:16px; }
+  .product-desc { font-size:0.88rem; color:#9aa5b4; line-height:1.7; margin-bottom:16px; flex:1; }
+
+  .product-features { list-style:none; margin-bottom:20px; }
+  .product-features li { font-size:0.83rem; color:#b0bac6; padding:6px 0; border-bottom:1px solid var(--border); display:flex; align-items:flex-start; gap:8px; }
+  .product-features li::before { content:'✓'; color:var(--green); font-weight:700; flex-shrink:0; }
+
+  .review-box { background:#0a0e14; border-left:3px solid var(--blue2); border-radius:4px; padding:14px 16px; margin-top:14px; font-size:0.82rem; color:#7a8694; font-style:italic; }
+  .review-author { color:var(--blue2); font-style:normal; font-weight:700; margin-top:6px; font-size:0.75rem; }
+
+  .product-footer { display:flex; align-items:center; justify-content:space-between; padding-top:18px; border-top:1px solid var(--border); margin-top:20px; flex-wrap:wrap; gap:10px; }
+  .price-label { font-size:0.75rem; color:var(--muted); display:block; }
+  .price { font-family:'Barlow Condensed',sans-serif; font-size:1.05rem; font-weight:700; color:var(--green); }
+
+  .btn-buy { background:var(--blue); color:#fff; padding:12px 24px; font-weight:700; font-size:0.85rem; letter-spacing:1px; text-transform:uppercase; text-decoration:none; border-radius:4px; transition:background 0.2s; box-shadow:0 3px 12px rgba(37,99,235,0.25); white-space:nowrap; }
+  .btn-buy:hover { background:var(--blue2); }
+
+  .section-divider { border:none; border-top:1px solid var(--border); margin:0 24px; }
+
+  /* WHY US */
+  .why-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:20px; }
+  .why-card { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:28px 24px; text-align:center; transition:border-color 0.2s; }
+  .why-card:hover { border-color:var(--blue2); }
+  .why-icon { font-size:2.5rem; margin-bottom:14px; }
+  .why-card h3 { font-family:'Barlow Condensed',sans-serif; font-size:1.15rem; font-weight:700; margin-bottom:8px; }
+  .why-card p { font-size:0.83rem; color:var(--muted); }
+
+  /* FOOTER */
+  footer { background:var(--black); border-top:3px solid var(--border); padding:56px 24px 28px; text-align:center; }
+  .footer-logo { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:2.2rem; color:var(--blue2); letter-spacing:2px; margin-bottom:12px; }
+  .footer-logo span { color:var(--white); }
+  .footer-disc { font-size:0.78rem; color:var(--muted); max-width:600px; margin:16px auto 0; line-height:1.8; }
+  .footer-copy { font-size:0.75rem; color:#333; margin-top:28px; }
+
+  @media(max-width:680px) {
+    nav ul { display:none; }
+    .stat { padding:16px 20px; }
+    .product-grid { grid-template-columns:1fr; }
+    .why-grid { grid-template-columns:1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="logo">Fitness<span>Nexus1</span></a>
+  <ul>
+    <li><a href="#equipment">Equipment</a></li>
+    <li><a href="#supplements">Supplements</a></li>
+    <li><a href="#about">About</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-eyebrow">🏆 Trusted Fitness Reviews</div>
+    <h1>Train Smarter.<br><span>Live Stronger.</span></h1>
+    <p>Expert reviews and honest recommendations on gym equipment and supplements — so you spend smart and train harder.</p>
+    <div class="hero-btns">
+      <a href="#equipment" class="btn-primary">🏋️ Shop Equipment</a>
+      <a href="#supplements" class="btn-outline">💊 Shop Supplements</a>
+    </div>
+  </div>
+</section>
+
+<div class="stats-bar">
+  <div class="stat"><span class="stat-num">6+</span><span class="stat-label">Reviewed Products</span></div>
+  <div class="stat"><span class="stat-num">100%</span><span class="stat-label">Honest Reviews</span></div>
+  <div class="stat"><span class="stat-num">Amazon</span><span class="stat-label">Verified Links</span></div>
+  <div class="stat"><span class="stat-num">Free</span><span class="stat-label">Expert Advice</span></div>
+</div>
+
+<!-- EQUIPMENT -->
+<div id="equipment">
+  <div class="section">
+    <div class="section-header">
+      <div class="section-tag">Category</div>
+      <h2>🏋️ Gym <span>Equipment</span></h2>
+      <p>Top-rated equipment for your home gym — from beginners to pros</p>
+    </div>
+    <div class="product-grid">
+
+      <!-- Product 1 -->
+      <div class="product-card">
+        <div class="product-img-wrap">
+          <img src="https://i.ibb.co/zH4qcFVT" alt="Squat Rack">
+          <div class="badge">🔥 -30% OFF</div>
+          <div class="badge-top">50+ Bought</div>
+        </div>
+        <div class="product-body">
+          <div class="product-brand">FONBEAR</div>
+          <div class="product-title">Adjustable Squat Rack & Bench Press — 550 LBS Max Load</div>
+          <div class="stars">★★★★☆</div>
+          <div class="rating-text">4.2/5 · 352 Reviews</div>
+          <p class="product-desc">The FONBEAR Adjustable Squat Rack is a powerhouse for home gyms. Handles up to 550 lbs and works as a barbell rack, bench press station, and dumbbell stand — the ultimate all-in-one solution for beginners and experienced lifters alike.</p>
+          <ul class="product-features">
+            <li>550 LBS max load — handles serious weight</li>
+            <li>Multi-function: squat + bench press + dumbbell stand</li>
+            <li>Adjustable height for all body types</li>
+            <li>Heavy-gauge alloy steel — built to last</li>
+            <li>Full assembly instructions included</li>
+          </ul>
+          <div class="review-box">
+            "This rack is absolutely solid. Set it up in under an hour and it doesn't wobble at all. Great value for a home gym!"
+            <div class="review-author">⭐ Verified Amazon Customer</div>
+          </div>
+          <div class="product-footer">
+            <div>
+              <span class="price-label">Limited Time Deal</span>
+              <span class="price">🏷️ Best Price on Amazon</span>
+            </div>
+            <a href="https://amzn.to/3SUWE5I" target="_blank" class="btn-buy">Shop Now →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 2 -->
+      <div class="product-card">
+        <div class="product-img-wrap">
+          <img src="https://i.ibb.co/ZzHVw2XX" alt="Barbell Set">
+          <div class="badge">🇺🇸 Made in USA</div>
+        </div>
+        <div class="product-body">
+          <div class="product-brand">US Weight</div>
+          <div class="product-title">US Weight Barbell Set — 55lb Adjustable Home Gym Barbell</div>
+          <div class="stars">★★★★☆</div>
+          <div class="rating-text">4.3/5 · Verified Reviews</div>
+          <p class="product-desc">Proudly made in the USA, this 55lb barbell set includes a 54-inch heavy-gauge steel bar, weight plates, and spring clips — everything you need to start lifting right out of the box. The adjustable design grows with your strength over time.</p>
+          <ul class="product-features">
+            <li>55lb complete adjustable barbell set</li>
+            <li>54" long heavy gauge steel bar</li>
+            <li>Includes 2x5lb + 4x10lb weight plates</li>
+            <li>Plastic-coated weights — rust resistant</li>
+            <li>90-day manufacturer warranty</li>
+          </ul>
+          <div class="review-box">
+            "Fantastic quality for the price. The weights feel solid and the bar doesn't flex at all. Love that it's made in the USA!"
+            <div class="review-author">⭐ Verified Amazon Customer</div>
+          </div>
+          <div class="product-footer">
+            <div>
+              <span class="price-label">Limited Time Deal</span>
+              <span class="price">🏷️ Best Price on Amazon</span>
+            </div>
+            <a href="https://amzn.to/4hgG3Dj" target="_blank" class="btn-buy">Shop Now →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 3 -->
+      <div class="product-card">
+        <div class="product-img-wrap">
+          <img src="https://i.ibb.co/0RPLQVXB" alt="Hex Dumbbell">
+          <div class="badge">⭐ Best Seller</div>
+        </div>
+        <div class="product-body">
+          <div class="product-brand">Amazon Basics</div>
+          <div class="product-title">Rubber Hex Dumbbell — 30lb Single Hand Weight</div>
+          <div class="stars">★★★★★</div>
+          <div class="rating-text">4.7/5 · Thousands of Reviews</div>
+          <p class="product-desc">One of the most popular dumbbells on the market. At 30 lbs, perfect for chest presses, rows, curls, and lunges. Rubber-encased hexagonal head prevents rolling, protects your floors, and lasts for years without rusting.</p>
+          <ul class="product-features">
+            <li>Solid cast iron with rubber-encased head</li>
+            <li>Hex shape — won't roll, easy to store</li>
+            <li>Non-slip textured grip for safety</li>
+            <li>Works for arms, chest, back, core & legs</li>
+            <li>Available in multiple sizes to build your set</li>
+          </ul>
+          <div class="review-box">
+            "Outstanding quality. The grip is super comfortable and the rubber coating is thick. Been using them daily for 6 months!"
+            <div class="review-author">⭐ Verified Amazon Customer</div>
+          </div>
+          <div class="product-footer">
+            <div>
+              <span class="price-label">Limited Time Deal</span>
+              <span class="price">🏷️ Best Price on Amazon</span>
+            </div>
+            <a href="https://amzn.to/4wMLWNa" target="_blank" class="btn-buy">Shop Now →</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<hr class="section-divider">
+
+<!-- SUPPLEMENTS -->
+<div id="supplements">
+  <div class="section">
+    <div class="section-header">
+      <div class="section-tag">Category</div>
+      <h2>💊 <span>Supplements</span></h2>
+      <p>Science-backed supplements to fuel your performance and recovery</p>
+    </div>
+    <div class="product-grid">
+
+      <!-- Supplement 1 -->
+      <div class="product-card">
+        <div class="product-img-wrap">
+          <img src="https://i.ibb.co/8nRsYs4R" alt="Hydrogen Water Tablets">
+          <div class="badge">💧 90 Count</div>
+        </div>
+        <div class="product-body">
+          <div class="product-brand">Hydrogen H2</div>
+          <div class="product-title">Hydrogen Water Tablets with Magnesium — 90 Count, 12 PPM</div>
+          <div class="stars">★★★★☆</div>
+          <div class="rating-text">4.1/5 · Verified Reviews</div>
+          <p class="product-desc">Next-level hydration for serious athletes. These fast-dissolving tablets infuse your water with molecular hydrogen — a powerful antioxidant that fights oxidative stress, reduces muscle fatigue, and speeds up post-workout recovery.</p>
+          <ul class="product-features">
+            <li>12 PPM molecular hydrogen — high concentration</li>
+            <li>Contains Magnesium for recovery support</li>
+            <li>Fast-dissolving — ready in 60-70 seconds</li>
+            <li>Light citrus flavor — refreshing taste</li>
+            <li>90 tablets — 3 month supply</li>
+          </ul>
+          <div class="review-box">
+            "I noticed less soreness within a week. The citrus flavor is pleasant and mild. Will definitely buy again!"
+            <div class="review-author">⭐ Verified Amazon Customer</div>
+          </div>
+          <div class="product-footer">
+            <div>
+              <span class="price-label">Limited Time Deal</span>
+              <span class="price">🏷️ Best Price on Amazon</span>
+            </div>
+            <a href="https://amzn.to/4yHq2wL" target="_blank" class="btn-buy">Shop Now →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Supplement 2 -->
+      <div class="product-card">
+        <div class="product-img-wrap">
+          <img src="https://i.ibb.co/9dRFZLp" alt="Isopure Whey Protein">
+          <div class="badge">💪 25g Protein</div>
+          <div class="badge-top">Gluten Free</div>
+        </div>
+        <div class="product-body">
+          <div class="product-brand">Isopure</div>
+          <div class="product-title">Isopure Low Carb Whey Isolate — Dutch Chocolate, 3.07 lbs</div>
+          <div class="stars">★★★★★</div>
+          <div class="rating-text">4.6/5 · Thousands of Reviews</div>
+          <p class="product-desc">One of the most trusted protein supplements available. Each serving delivers 25g of pure whey isolate with minimal carbs — ideal for low-carb or keto diets. Packed with 20+ vitamins and minerals for complete post-workout nutrition.</p>
+          <ul class="product-features">
+            <li>25g pure whey isolate per serving</li>
+            <li>Low carb — ideal for cutting phase</li>
+            <li>100% gluten free — safe for all</li>
+            <li>Rich Dutch Chocolate flavor</li>
+            <li>41 servings per container — great value</li>
+          </ul>
+          <div class="review-box">
+            "Cleanest tasting protein I've ever had. Mixes perfectly with just water. My go-to post-workout shake!"
+            <div class="review-author">⭐ Verified Amazon Customer</div>
+          </div>
+          <div class="product-footer">
+            <div>
+              <span class="price-label">Limited Time Deal</span>
+              <span class="price">🏷️ Best Price on Amazon</span>
+            </div>
+            <a href="https://amzn.to/4vyRvxA" target="_blank" class="btn-buy">Shop Now →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Supplement 3 -->
+      <div class="product-card">
+        <div class="product-img-wrap">
+          <img src="https://i.ibb.co/0VZqvYvs" alt="Orgain Creatine">
+          <div class="badge">⚡ 100 Servings</div>
+        </div>
+        <div class="product-body">
+          <div class="product-brand">Orgain</div>
+          <div class="product-title">Orgain Creatine Monohydrate Micronized Powder — 100 Servings</div>
+          <div class="stars">★★★★☆</div>
+          <div class="rating-text">4.4/5 · Verified Reviews</div>
+          <p class="product-desc">One of the most well-researched supplements in fitness. This micronized powder mixes instantly into any drink and supports explosive strength, muscle growth, faster recovery, and even brain health. Pure, clean, and effective.</p>
+          <ul class="product-features">
+            <li>100 servings per container — exceptional value</li>
+            <li>Micronized — mixes instantly, no grit</li>
+            <li>Completely unflavored — add to any drink</li>
+            <li>Supports muscle growth & explosive strength</li>
+            <li>No artificial additives or fillers</li>
+          </ul>
+          <div class="review-box">
+            "Best creatine I've tried. Dissolves completely, no weird taste, and I noticed strength gains within 2 weeks!"
+            <div class="review-author">⭐ Verified Amazon Customer</div>
+          </div>
+          <div class="product-footer">
+            <div>
+              <span class="price-label">Limited Time Deal</span>
+              <span class="price">🏷️ Best Price on Amazon</span>
+            </div>
+            <a href="https://amzn.to/4f9LzF2" target="_blank" class="btn-buy">Shop Now →</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<hr class="section-divider">
+
+<!-- WHY TRUST US -->
+<div id="about">
+  <div class="section">
+    <div class="section-header">
+      <div class="section-tag">About Us</div>
+      <h2>Why Trust <span>FitnessNexus1?</span></h2>
+      <p>We do the research so you don't have to</p>
+    </div>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-icon">🔍</div>
+        <h3>Thorough Research</h3>
+        <p>Every product is carefully analyzed for quality, value, and real user feedback before we recommend it.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">✅</div>
+        <h3>Honest Reviews</h3>
+        <p>We tell you the pros AND cons. No sugarcoating — just information you need to decide.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">💰</div>
+        <h3>Best Value Picks</h3>
+        <p>We find products that give you the best results for your money — every single time.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">🚀</div>
+        <h3>Always Updated</h3>
+        <p>Our product list is regularly updated with the latest and greatest in fitness gear.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">Fitness<span>Nexus1</span></div>
+  <p style="color:var(--muted);font-size:0.9rem;margin-top:8px;">Your trusted guide to gym equipment & supplements</p>
+  <p class="footer-disc">
+    <strong>Affiliate Disclosure:</strong> FitnessNexus1 is a participant in the Amazon Associates Program.
+    When you click our links and make a purchase, we may earn a small commission at no extra cost to you.
+    This helps us keep the site running and producing free, honest reviews.
+  </p>
+  <p class="footer-copy">© 2025 FitnessNexus1. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
